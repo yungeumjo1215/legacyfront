@@ -22,7 +22,7 @@ class ActionProvider {
         messages: [...prevState.messages, loadingMessage],
       }));
 
-      const response = await fetch("http://localhost:8000/chat", {
+      const response = await fetch("https://back.a.ringgo.site/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
