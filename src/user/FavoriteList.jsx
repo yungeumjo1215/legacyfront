@@ -191,6 +191,7 @@ const FavoriteList = () => {
           onRemove={handleRemoveFavorite}
           getCurrentItems={getCurrentItems}
           onErrorImg={onErrorImg}
+          getItemsPerPage={getItemsPerPage}
         />
 
         {/* 행사 섹션 */}
@@ -204,6 +205,7 @@ const FavoriteList = () => {
           onRemove={handleRemoveFavorite}
           getCurrentItems={getCurrentItems}
           onErrorImg={onErrorImg}
+          getItemsPerPage={getItemsPerPage}
         />
 
         <PageModal
@@ -228,8 +230,9 @@ const Section = ({
   onRemove,
   getCurrentItems,
   onErrorImg,
+  getItemsPerPage,
 }) => {
-  const itemsPerPage = 4;
+  const itemsPerPage = getItemsPerPage();
   const maxPage = Math.ceil(data.length / itemsPerPage) - 1;
 
   return (
