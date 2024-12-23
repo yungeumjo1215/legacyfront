@@ -34,7 +34,7 @@ const FavoriteList = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          "http://localhost:8000/pgdb/favoritelist",
+          "https://back.a.ringgo.site/pgdb/favoritelist",
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setFavorites({
@@ -71,7 +71,7 @@ const FavoriteList = () => {
         type: type === "heritage" ? "heritage" : "event",
       };
 
-      await axios.delete("http://localhost:8000/pgdb/favoritelist", {
+      await axios.delete("https://back.a.ringgo.site/pgdb/favoritelist", {
         headers: { Authorization: `Bearer ${token}` },
         data: { id: requestData.id, type: requestData.type },
       });
@@ -141,7 +141,7 @@ const FavoriteList = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:8000/pgdb/favoritelist",
+        "https://back.a.ringgo.site/pgdb/favoritelist",
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
