@@ -13,7 +13,7 @@ export const loginUser = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/login",
+        "https://back.a.ringgo.site/login",
         credentials
       );
       const { token, user } = response.data;

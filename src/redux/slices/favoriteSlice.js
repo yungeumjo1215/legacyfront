@@ -5,13 +5,16 @@ export const fetchFavorites = createAsyncThunk(
   "favorites/fetchFavorites",
   async (token, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:8000/pgdb/favoritelist", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "https://back.a.ringgo.site/pgdb/favoritelist",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.text();
