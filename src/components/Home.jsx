@@ -29,6 +29,7 @@ const Home = () => {
   const [swiperInstance, setSwiperInstance] = useState(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
     const currentDate = new Date();
@@ -121,9 +122,13 @@ const Home = () => {
           <video
             src={a0}
             autoPlay
+            playsInline
             loop
             muted
-            className="absolute top-0 left-0 w-full h-full object-contain"
+            onLoadedData={() => setIsVideoLoaded(true)}
+            className={`absolute top-0 left-0 w-full h-full object-contain ${
+              isVideoLoaded ? "opacity-100" : "opacity-0"
+            }`}
           ></video>
         </div>
       </div>
@@ -279,6 +284,7 @@ const Home = () => {
               <video
                 src={b1}
                 autoPlay
+                playsInline
                 loop
                 muted
                 className="w-full h-full object-cover"
