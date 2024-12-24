@@ -255,7 +255,9 @@ const Map = ({ selectedLocation }) => {
 
     const fetchGetHeritageData = async () => {
       try {
-        const response = await axios.get("http://a.ringgo.site/pgdb/heritage");
+        const response = await axios.get(
+          "https://back.a.ringgo.site/pgdb/heritage"
+        );
         if (!response.data) throw new Error("데이터를 불러오는데 실패했습니다");
         return response.data;
       } catch (error) {

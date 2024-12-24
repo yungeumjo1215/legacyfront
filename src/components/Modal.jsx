@@ -27,13 +27,13 @@ const Modal = ({ item, onClose, onFavoriteChange }) => {
 
       if (!isFavorite) {
         await axios.post(
-          "http://a.ringgo.site/pgdb/favoritelist",
+          "https://back.a.ringgo.site/pgdb/favoritelist",
           { id: item.heritageid, type: "heritage" },
           { headers: { Authorization: `Bearer ${token}` } }
         );
         dispatch(addFavorite({ type: "heritage", data: item }));
       } else {
-        await axios.delete("http://a.ringgo.site/pgdb/favoritelist", {
+        await axios.delete("https://back.a.ringgo.site/pgdb/favoritelist", {
           headers: { Authorization: `Bearer ${token}` },
           data: { id: item.heritageid, type: "heritage" },
         });
