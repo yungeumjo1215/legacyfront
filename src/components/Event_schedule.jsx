@@ -79,6 +79,7 @@ const EventSchedule = () => {
 
   const handleSearchChange = useCallback((e) => {
     setSearch(e.target.value);
+    setCurrentPage(1);
   }, []);
 
   const handleRegionSelect = useCallback((region) => {
@@ -245,7 +246,7 @@ const EventSchedule = () => {
         <div className="bg-white min-h-[410px] rounded-lg shadow-md p-6 mb-8">
           <div className="xl:flex xl:flex-row flex-col justify-between items-start gap-6">
             <div
-              className="xl:w-1/2 w-full flex flex-wrap justify-center sm:justify-start items-center 
+              className="xl:w-1/2 w-full flex flex-wrap justify-center sm:justify-start items-center
                           sm:ml-4 gap-2 sm:gap-4 xl:mt-[6.25rem] mt-4"
             >
               <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3 ">
@@ -276,13 +277,13 @@ const EventSchedule = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col sm:flex-row sm:justify-between">
-          <div className="w-full sm:w-1/2 mb-4 flex justify-start">
+        <div className="flex flex-col sm:flex-row sm:justify-between items-center mb-6">
+          <div className="w-full sm:w-1/2 mb-4 sm:mb-0">
             <p className="SubFont text-2xl">
               Total: {formattedFestivals.length}건
             </p>
           </div>
-          <div className="w-full sm:w-1/3 mb-4 sm:ml-auto">
+          <div className="w-full sm:w-1/2 lg:w-1/3">
             <SearchBar value={search} onChange={handleSearchChange} />
           </div>
         </div>
@@ -316,10 +317,10 @@ const EventSchedule = () => {
                 onClick={closeError}
               />
               <div
-                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                           bg-[#e2e2e2] text-black p-4 md:p-5 rounded-lg z-[10000] 
+                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+                           bg-[#e2e2e2] text-black p-4 md:p-5 rounded-lg z-[10000]
                            w-[90%] md:w-[400px] max-w-[400px]
-                           h-[180px] md:h-[200px] 
+                           h-[180px] md:h-[200px]
                            flex flex-col justify-center items-center text-center"
                 role="alert"
               >
@@ -353,10 +354,10 @@ const EventSchedule = () => {
                 onClick={closeSuccessMessage}
               />
               <div
-                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                           bg-[#e2e2e2] text-black p-4 md:p-5 rounded-lg z-[10000] 
+                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+                           bg-[#e2e2e2] text-black p-4 md:p-5 rounded-lg z-[10000]
                            w-[90%] md:w-[400px] max-w-[400px]
-                           h-[150px] md:h-[170px] 
+                           h-[150px] md:h-[170px]
                            flex flex-col justify-center items-center text-center"
                 role="alert"
                 onClick={(e) => e.stopPropagation()}
@@ -382,17 +383,17 @@ const EventSchedule = () => {
                   currentItems.map((festival, index) => (
                     <li
                       key={`${festival.programName}-${index}`}
-                      className="my-3 md:my-5 flex items-center opacity-0 animate-[slideDown_0.3s_ease-out_forwards]"
+                      className="my-3 md:my-5 flex items-center opacity-0 animate-[slideDown_0.3s_ease-out_forwards] cursor-pointer sm:cursor-default"
                       style={{ animationDelay: `${index * 0.05}s` }}
                     >
                       <div className="border p-4 rounded-lg transition-colors w-full">
-                        <div className="flex items-start">
+                        <div className="flex items-start pr-5 sm:pr-0">
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
                               handleStarClick(festival);
                             }}
-                            className={`star-button mr-2 sm:mr-3 ${
+                            className={`star-button mr-2 sm:mr-3 p-0 flex items-center ${
                               isEventStarred(festival.festivalid)
                                 ? "text-yellow-400"
                                 : "text-gray-300"
@@ -406,23 +407,25 @@ const EventSchedule = () => {
                           >
                             <TiStarFullOutline className="text-2xl sm:text-3xl" />
                           </button>
-
                           <div className="flex-1">
-                            <div className="flex justify-between items-center mb-2">
-                              <h3 className="MainFont text-xl sm:text-2xl">
+                            <div className="flex justify-between items-center mb-2 gap-2">
+                              <h3 className="MainFont text-sm sm:text-xl lg:text-2xl">
                                 {festival.programName}
                               </h3>
                               <button
-                                className="border-2 border-blue-800 rounded-md
-                                           hover:bg-blue-800 hover:text-white
-                                          text-sm sm:text-base lg:text-lg
-                                          px-2 sm:px-3 lg:px-4
-                                          py-1 sm:py-1.5 lg:py-2
-                                          transition-all duration-300 ease-in-out
-                                          shadow-sm hover:shadow-md
-                                          text-center text-nowrap
-                                          font-bold"
-                                onClick={() => handleEventClick(festival)}
+                                className="border sm:border-2 border-blue-800 rounded-md
+                                         hover:bg-blue-800 hover:text-white
+                                         text-xs sm:text-base lg:text-lg
+                                         px-1.5 sm:px-3 lg:px-4
+                                         py-0.5 sm:py-1.5 lg:py-2
+                                         transition-all duration-300 ease-in-out
+                                         shadow-sm hover:shadow-md
+                                         text-center text-nowrap
+                                         font-bold"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleEventClick(festival);
+                                }}
                               >
                                 더보기
                               </button>
@@ -443,8 +446,8 @@ const EventSchedule = () => {
                                 />
                               </div>
                               <div className="flex-1">
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-4">
-                                  <div className=" p-2 sm:p-3 rounded-lg">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 sm:gap-4">
+                                  <div className="p-1 sm:p-3 rounded-lg">
                                     <p className="SubFont text-base sm:text-lg">
                                       <span className="font-medium mr-2">
                                         행사 내용:
@@ -452,7 +455,7 @@ const EventSchedule = () => {
                                       {formatValue(festival.programContent)}
                                     </p>
                                   </div>
-                                  <div className=" p-2 sm:p-3 rounded-lg">
+                                  <div className="p-1 sm:p-3 rounded-lg">
                                     <p className="SubFont text-base sm:text-lg">
                                       <span className="font-medium mr-2">
                                         기간:
@@ -461,7 +464,7 @@ const EventSchedule = () => {
                                       {formatValue(festival.endDate)}
                                     </p>
                                   </div>
-                                  <div className=" p-2 sm:p-3 rounded-lg">
+                                  <div className="p-1 sm:p-3 rounded-lg">
                                     <p className="SubFont text-base sm:text-lg">
                                       <span className="font-medium mr-2">
                                         장소:
@@ -469,7 +472,7 @@ const EventSchedule = () => {
                                       {formatValue(festival.location)}
                                     </p>
                                   </div>
-                                  <div className=" p-2 sm:p-3 rounded-lg">
+                                  <div className="p-1 sm:p-3 rounded-lg">
                                     <p className="SubFont text-base sm:text-lg">
                                       <span className="font-medium mr-2">
                                         대상:
@@ -477,7 +480,7 @@ const EventSchedule = () => {
                                       {formatValue(festival.targetAudience)}
                                     </p>
                                   </div>
-                                  <div className=" p-2 sm:p-3 rounded-lg lg:col-span-2">
+                                  <div className="p-1 sm:p-3 rounded-lg lg:col-span-2">
                                     <p className="SubFont text-base sm:text-lg">
                                       <span className="font-medium mr-2">
                                         문의:

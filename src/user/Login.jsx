@@ -33,7 +33,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://back.a.ringgo.site/account/login",
+        "https://back.seunghyeon.site/account/login",
         formData,
         {
           headers: {

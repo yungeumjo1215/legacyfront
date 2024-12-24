@@ -27,13 +27,13 @@ const Modal = ({ item, onClose, onFavoriteChange }) => {
 
       if (!isFavorite) {
         await axios.post(
-          "https://back.a.ringgo.site/pgdb/favoritelist",
+          "https://back.seunghyeon.site/pgdb/favoritelist",
           { id: item.heritageid, type: "heritage" },
           { headers: { Authorization: `Bearer ${token}` } }
         );
         dispatch(addFavorite({ type: "heritage", data: item }));
       } else {
-        await axios.delete("https://back.a.ringgo.site/pgdb/favoritelist", {
+        await axios.delete("https://back.seunghyeon.site/pgdb/favoritelist", {
           headers: { Authorization: `Bearer ${token}` },
           data: { id: item.heritageid, type: "heritage" },
         });
@@ -81,19 +81,19 @@ const Modal = ({ item, onClose, onFavoriteChange }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-5">
-          <h2 className="text-[28px] m-0 MainFont break-words flex-1 pr-5">
+          <h2 className="text-[18px] sm:text-[28px] m-0 MainFont break-words flex-1 pr-5">
             {item.ccbamnm1}
           </h2>
           <div className="flex items-center gap-4">
             <button
               onClick={handleFavoriteClick}
-              className="text-2xl text-yellow-500 hover:text-yellow-600"
+              className="text-xl sm:text-2xl text-yellow-500 hover:text-yellow-600"
             >
               {isFavorite ? <AiFillStar /> : <AiOutlineStar />}
             </button>
             <button
               onClick={onClose}
-              className="bg-blue-800 text-white px-4 py-1 border-none text-[25px] rounded cursor-pointer"
+              className="bg-blue-800 text-white px-4 py-1 border-none text-[18px] sm:text-[25px] rounded cursor-pointer"
             >
               X
             </button>
@@ -109,7 +109,7 @@ const Modal = ({ item, onClose, onFavoriteChange }) => {
           />
         )}
 
-        <p className="SubFont text-lg mb-5 box-border border border-[#7d7576] rounded-lg p-2.5 leading-relaxed whitespace-pre-line">
+        <p className="SubFont text-base sm:text-lg mb-5 box-border border border-[#7d7576] rounded-lg p-2.5 leading-relaxed whitespace-pre-line">
           {item.content}
         </p>
 

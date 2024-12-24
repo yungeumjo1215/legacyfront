@@ -1,3 +1,5 @@
+import LoadingDots from "./LoadingDots";
+
 class ActionProvider {
   constructor(createChatBotMessage, setStateFunc) {
     this.createChatBotMessage = createChatBotMessage;
@@ -5,24 +7,23 @@ class ActionProvider {
   }
 
   handleMessage = async (message) => {
-    // 고유 ID를 가진 로딩 메시지 생성
     const loadingId = Date.now();
     const loadingMessage = {
-      ...this.createChatBotMessage("잠시만 기다려주세요...", {
-        loading: true,
+      ...this.createChatBotMessage(<LoadingDots />, {
         withAvatar: true,
+        // loading: true,
+        customComponent: true,
       }),
       id: loadingId,
     };
 
     try {
-      // 로딩 메시지 추가
       this.setState((prevState) => ({
         ...prevState,
         messages: [...prevState.messages, loadingMessage],
       }));
 
-      const response = await fetch("https://back.a.ringgo.site/chat", {
+      const response = await fetch("https://back.seunghyeon.site/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,24 +34,25 @@ class ActionProvider {
       const data = await response.json();
 
       if (data.answer) {
-        // 특정 로딩 메시지만 제거하고 새 메시지 추가
         this.setState((prevState) => ({
           ...prevState,
           messages: [
             ...prevState.messages.filter((msg) => msg.id !== loadingId),
-            this.createChatBotMessage(data.answer),
+            this.createChatBotMessage(data.answer, {
+              withAvatar: true,
+            }),
           ],
         }));
       }
     } catch (error) {
       console.error("Error:", error);
-
-      // 에러 시에도 특정 로딩 메시지만 제거
       this.setState((prevState) => ({
         ...prevState,
         messages: [
           ...prevState.messages.filter((msg) => msg.id !== loadingId),
-          this.createChatBotMessage("오류가 발생했습니다. 다시 시도해주세요."),
+          this.createChatBotMessage("오류가 발생했습니다. 다시 시도해주세요.", {
+            withAvatar: true,
+          }),
         ],
       }));
     }

@@ -34,7 +34,7 @@ const FavoriteList = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          "https://back.a.ringgo.site/pgdb/favoritelist",
+          "https://back.seunghyeon.site/pgdb/favoritelist",
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setFavorites({
@@ -71,7 +71,7 @@ const FavoriteList = () => {
         type: type === "heritage" ? "heritage" : "event",
       };
 
-      await axios.delete("https://back.a.ringgo.site/pgdb/favoritelist", {
+      await axios.delete("https://back.seunghyeon.site/pgdb/favoritelist", {
         headers: { Authorization: `Bearer ${token}` },
         data: { id: requestData.id, type: requestData.type },
       });
@@ -141,7 +141,7 @@ const FavoriteList = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "https://back.a.ringgo.site/pgdb/favoritelist",
+        "https://back.seunghyeon.site/pgdb/favoritelist",
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -229,94 +229,134 @@ const Section = ({
   getCurrentItems,
   onErrorImg,
 }) => {
-  const itemsPerPage = 4;
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const itemsPerPage = windowWidth < 640 ? 1 : 4;
   const maxPage = Math.ceil(data.length / itemsPerPage) - 1;
+
+  const currentItems = (() => {
+    const start = page * itemsPerPage;
+    return data.slice(start, start + itemsPerPage);
+  })();
 
   return (
     <div className="mb-8">
       <h2 className="text-xl font-semibold mb-4">
         {title} ({data.length})
       </h2>
-      <div className="relative px-8 h-[265px]">
+      <div className="relative px-4">
         {data.length === 0 ? (
-          <div className="h-full flex items-center justify-center">
+          <div className="flex items-center justify-center min-h-[200px]">
             <p className="text-center text-gray-500">
               즐겨찾기한 항목이 없습니다.
             </p>
           </div>
         ) : (
-          <>
-            {data.length > itemsPerPage && (
-              <>
+          <div className="flex flex-col items-center w-full">
+            <div className="relative w-full">
+              {data.length > 1 && windowWidth >= 1024 && (
+                <>
+                  <button
+                    onClick={() => onPageChange(-1, type)}
+                    disabled={page === 0}
+                    className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 z-10 border rounded-full p-2 hover:bg-gray-200 items-center justify-center cursor-pointer"
+                  >
+                    <IoIosArrowBack size={24} />
+                  </button>
+                  <button
+                    onClick={() => onPageChange(1, type)}
+                    disabled={page >= maxPage}
+                    className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 z-10 border rounded-full p-2 hover:bg-gray-200 items-center justify-center cursor-pointer"
+                  >
+                    <IoIosArrowForward size={24} />
+                  </button>
+                </>
+              )}
+
+              <div className="w-full xl:w-[1300px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 mx-auto">
+                {currentItems.map((item, idx) => (
+                  <div
+                    key={`${page}-${idx}`}
+                    className="w-full p-4 bg-white rounded-lg shadow cursor-pointer animate-slide-from-left border border-gray-200"
+                    style={{
+                      animationDelay: `${idx * 150}ms`,
+                      opacity: 0,
+                      animation: `slideIn 0.5s ease-out ${
+                        idx * 150
+                      }ms forwards`,
+                    }}
+                    onClick={() => onOpenModal(item, type)}
+                  >
+                    <div className="relative overflow-hidden rounded">
+                      <img
+                        src={
+                          type === "heritage"
+                            ? item.heritageimageurl || default_Img
+                            : item.festivalimageurl || default_Img
+                        }
+                        alt={
+                          type === "heritage"
+                            ? item.heritagename
+                            : item.festivalname
+                        }
+                        onError={onErrorImg}
+                        className="w-full h-[180px] object-cover transition-transform duration-300 hover:scale-110"
+                      />
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onRemove(item, type);
+                        }}
+                        className="absolute bottom-2 left-2 text-yellow-400 hover:text-yellow-500"
+                      >
+                        <AiFillStar className="text-2xl" />
+                      </button>
+                    </div>
+                    <div className="mt-2">
+                      <h3 className="font-semibold truncate">
+                        {type === "heritage"
+                          ? item.heritagename
+                          : item.festivalname}
+                      </h3>
+                      <p className="text-sm text-gray-600 mt-3 truncate">
+                        {type === "heritage"
+                          ? item.heritageaddress || "주소 정보 없음"
+                          : item.festivallocation || "주소 정보 없음"}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {data.length > 1 && windowWidth < 1024 && (
+              <div className="flex justify-center gap-4 mt-6">
                 <button
                   onClick={() => onPageChange(-1, type)}
                   disabled={page === 0}
-                  className="absolute left-10 top-1/2 -translate-y-1/2 z-10 border rounded-full p-2 hover:bg-gray-200 flex items-center justify-center cursor-pointer"
+                  className="border rounded-full p-2 hover:bg-gray-200 flex items-center justify-center cursor-pointer"
                 >
                   <IoIosArrowBack size={24} />
                 </button>
+                <span className="flex items-center">
+                  {page + 1} / {maxPage + 1}
+                </span>
                 <button
                   onClick={() => onPageChange(1, type)}
                   disabled={page >= maxPage}
-                  className="absolute right-10 top-1/2 -translate-y-1/2 z-10 border rounded-full p-2 hover:bg-gray-200 flex items-center justify-center cursor-pointer"
+                  className="border rounded-full p-2 hover:bg-gray-200 flex items-center justify-center cursor-pointer"
                 >
                   <IoIosArrowForward size={24} />
                 </button>
-              </>
+              </div>
             )}
-            <div className="flex gap-6 justify-center h-full items-center">
-              {getCurrentItems(data, page).map((item, idx) => (
-                <div
-                  key={`${page}-${idx}`}
-                  className="relative p-4 bg-white rounded-lg shadow cursor-pointer w-[280px] animate-slide-from-left border border-gray-200"
-                  style={{
-                    animationDelay: `${idx * 150}ms`,
-                    opacity: 0,
-                    animation: `slideIn 0.5s ease-out ${idx * 150}ms forwards`,
-                  }}
-                  onClick={() => onOpenModal(item, type)}
-                >
-                  <div className="relative overflow-hidden rounded">
-                    <img
-                      src={
-                        type === "heritage"
-                          ? item.heritageimageurl || default_Img
-                          : item.festivalimageurl || default_Img
-                      }
-                      alt={
-                        type === "heritage"
-                          ? item.heritagename
-                          : item.festivalname
-                      }
-                      onError={onErrorImg}
-                      className="h-[180px] w-[250px] object-cover transition-transform duration-300 hover:scale-110"
-                    />
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onRemove(item, type);
-                      }}
-                      className="absolute bottom-2 left-2 text-yellow-400 hover:text-yellow-500"
-                    >
-                      <AiFillStar className="text-2xl" />
-                    </button>
-                  </div>
-                  <div className="mt-2">
-                    <h3 className="font-semibold truncate">
-                      {type === "heritage"
-                        ? item.heritagename
-                        : item.festivalname}
-                    </h3>
-                    <p className="text-sm text-gray-600 mt-3 truncate">
-                      {type === "heritage"
-                        ? item.heritageaddress || "주소 정보 없음"
-                        : item.festivallocation || "주소 정보 없음"}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </>
+          </div>
         )}
       </div>
     </div>

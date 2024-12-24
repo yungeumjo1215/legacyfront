@@ -344,3 +344,53 @@
     min-height: 70px;
   }
 }
+
+/* 기존 CSS에 추가 */
+.react-chatbot-kit-chat-bot-message.loading {
+  background-color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.react-chatbot-kit-chat-bot-message.loading
+  .react-chatbot-kit-chat-bot-message-arrow {
+  display: none !important;
+}
+
+/* @keyframes loadingBounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+} */
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+}
+
+.loading-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #3959b3;
+  border-radius: 50%;
+  animation: loadingBounce 1.4s infinite ease-in-out both;
+}
+
+#dot1 {
+  animation-delay: 0s;
+}
+
+#dot2 {
+  animation-delay: 0.1s;
+}
+
+#dot3 {
+  animation-delay: 0.2s;
+}

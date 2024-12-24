@@ -27,7 +27,7 @@ const PageModal = ({ isOpen, onClose, item, type, onUpdate }) => {
 
       await axios({
         method: "delete",
-        url: "https://back.a.ringgo.site/pgdb/favoritelist",
+        url: "https://back.seunghyeon.site/pgdb/favoritelist",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -96,19 +96,19 @@ const PageModal = ({ isOpen, onClose, item, type, onUpdate }) => {
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex justify-between items-center mb-5">
-            <h2 className="text-[28px] m-0 MainFont break-words flex-1 pr-5">
+            <h2 className="text-[18px] sm:text-[28px] m-0 MainFont break-words flex-1 pr-5">
               {type === "heritage" ? item.heritagename : item.festivalname}
             </h2>
             <div className="flex items-center gap-4">
               <button
                 onClick={handleRemoveFavorite}
-                className="text-2xl text-yellow-500 hover:text-yellow-600"
+                className="text-xl sm:text-2xl text-yellow-500 hover:text-yellow-600"
               >
                 <AiFillStar />
               </button>
               <button
                 onClick={onClose}
-                className="bg-blue-800 text-white px-4 py-1 border-none text-[25px] rounded cursor-pointer"
+                className="bg-blue-800 text-white px-4 py-1 border-none text-[18px] sm:text-[25px] rounded cursor-pointer"
               >
                 X
               </button>
@@ -126,7 +126,7 @@ const PageModal = ({ isOpen, onClose, item, type, onUpdate }) => {
             className="w-full rounded-lg mb-5 max-h-[350px] object-contain"
           />
 
-          <p className="SubFont text-lg mb-5 box-border border border-[#7d7576] rounded-lg p-2.5 leading-relaxed whitespace-pre-line">
+          <p className="SubFont text-base sm:text-lg mb-5 box-border border border-[#7d7576] rounded-lg p-2.5 leading-relaxed whitespace-pre-line">
             {type === "heritage" ? item.heritagecontent : item.festivalcontent}
           </p>
 

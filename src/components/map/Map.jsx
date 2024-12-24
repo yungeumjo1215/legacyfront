@@ -140,16 +140,20 @@ const Map = ({ selectedLocation }) => {
                 ${heritageGroup
                   .map(
                     (heritage) => `
-                  <div style="border-bottom: 1px solid #eee; padding: 10px 0;">
+                  <div style="border-bottom: 1px solid #eee; padding: 10px 0;
+                  ">
                     ${
                       heritage.imageUrl
                         ? `<div style="
                           width: 100%;
-                          height: 250px;
-                          margin: 0;
+                          height: 200px;
+                          margin: 0 auto;
                           padding: 0;
                           overflow: hidden;
                           border-radius: 8px 8px 0 0;
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
                         ">
                           <img 
                             src="${heritage.imageUrl}" 
@@ -252,7 +256,7 @@ const Map = ({ selectedLocation }) => {
     const fetchGetHeritageData = async () => {
       try {
         const response = await axios.get(
-          "https://back.a.ringgo.site/pgdb/heritage"
+          "https://back.seunghyeon.site/pgdb/heritage"
         );
         if (!response.data) throw new Error("데이터를 불러오는데 실패했습니다");
         return response.data;
@@ -298,7 +302,7 @@ const Map = ({ selectedLocation }) => {
 
   return (
     <div>
-      <div className="map-loading-error-container fixed z-[9999] w-[80%] bg-white">
+      <div className="map-loading-error-container fixed z-[9999] w-[100%] bg-white opacity-80 sm:w-[80%]">
         {isLoading && (
           <div className="SubFont text-center p-[20px]">
             지도를 불러오는 중...
