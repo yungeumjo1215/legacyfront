@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://back.seunghyeon.site/",
+  baseURL: "http://a.ringgo.site/",
   headers: {
     "Content-Type": "application/json",
   },

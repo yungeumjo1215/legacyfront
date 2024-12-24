@@ -57,12 +57,9 @@ const SearchPage = () => {
     const fetchGetHeritageData = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(
-          "https://back.seunghyeon.site/pgdb/heritage",
-          {
-            signal: controller.signal,
-          }
-        );
+        const response = await axios.get("http://a.ringgo.site/pgdb/heritage", {
+          signal: controller.signal,
+        });
 
         if (!response.data) {
           throw new Error("데이터를 불러오는데 실패했습니다");
@@ -92,7 +89,7 @@ const SearchPage = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "https://back.seunghyeon.site/pgdb/favoritelist",
+        "http://a.ringgo.site/pgdb/favoritelist",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -215,14 +212,14 @@ const SearchPage = () => {
     try {
       if (!isCurrentlyFavorite) {
         await axios.post(
-          "https://back.seunghyeon.site/pgdb/favoritelist",
+          "http://a.ringgo.site/pgdb/favoritelist",
           { id: heritage.heritageid, type: "heritage" },
           { headers: { Authorization: `Bearer ${token}` } }
         );
         dispatch(addFavorite({ type: "heritage", data: heritage }));
         setAlertMessage("즐겨찾기에 추가되었습니다.");
       } else {
-        await axios.delete("https://back.seunghyeon.site/pgdb/favoritelist", {
+        await axios.delete("http://a.ringgo.site/pgdb/favoritelist", {
           headers: { Authorization: `Bearer ${token}` },
           data: { id: heritage.heritageid, type: "heritage" },
         });

@@ -5,16 +5,13 @@ export const fetchFavorites = createAsyncThunk(
   "favorites/fetchFavorites",
   async (token, { rejectWithValue }) => {
     try {
-      const response = await fetch(
-        "https://back.seunghyeon.site/pgdb/favoritelist",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch("http://a.ringgo.site/pgdb/favoritelist", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         const errorData = await response.text();
@@ -61,20 +58,17 @@ export const addFavorites = createAsyncThunk(
       // console.log("Adding favorite with token:", token);
       // console.log("Favorite ID:", favoriteId, "Type:", type);
 
-      const response = await fetch(
-        "https://back.seunghyeon.site/pgdb/favoritelist",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            id: favoriteId, // Can be festivalid or heritageid
-            type, // "event" or "heritage"
-          }),
-        }
-      );
+      const response = await fetch("http://a.ringgo.site/pgdb/favoritelist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: favoriteId, // Can be festivalid or heritageid
+          type, // "event" or "heritage"
+        }),
+      });
 
       // console.log("Add Response Status:", response.status);
 
@@ -102,20 +96,17 @@ export const deleteFavorites = createAsyncThunk(
       // console.log("Deleting favorite with token:", token);
       // console.log("Favorite ID:", favoriteId, "Type:", type);
 
-      const response = await fetch(
-        "https://back.seunghyeon.site/pgdb/favoritelist",
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            id: favoriteId, // Can be festivalid or heritageid
-            type, // "event" or "heritage"
-          }),
-        }
-      );
+      const response = await fetch("http://a.ringgo.site/pgdb/favoritelist", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: favoriteId, // Can be festivalid or heritageid
+          type, // "event" or "heritage"
+        }),
+      });
 
       // console.log("Delete Response Status:", response.status);
 
