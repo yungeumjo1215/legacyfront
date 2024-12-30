@@ -7,7 +7,7 @@ export const fetchHeritageData = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "https://back.a.ringgo.site/pgdb/heritage"
+        "https://back.seunghyeon.site/pgdb/heritage"
       );
       return response.data; // Directly return the API response
     } catch (error) {

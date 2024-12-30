@@ -1,4 +1,4 @@
-const rootPath = "https://back.a.ringgo.site/";
+const rootPath = "https://back.seunghyeon.site/";
 
 const GET_HERITAGE_API_URL = `${rootPath}/heritage`;
 const GET_FESTIVAL_API_URL = `${rootPath}/festival`;
