@@ -6,7 +6,7 @@ export const fetchFavorites = createAsyncThunk(
   async (token, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        "https://back.seunghyeon.site/pgdb/favoritelist",
+        "https://back.a.ringgo.site/pgdb/favoritelist",
         {
           method: "GET",
           headers: {
@@ -62,7 +62,7 @@ export const addFavorites = createAsyncThunk(
       // console.log("Favorite ID:", favoriteId, "Type:", type);
 
       const response = await fetch(
-        "https://back.seunghyeon.site/pgdb/favoritelist",
+        "https://back.a.ringgo.site/pgdb/favoritelist",
         {
           method: "POST",
           headers: {
@@ -103,7 +103,7 @@ export const deleteFavorites = createAsyncThunk(
       // console.log("Favorite ID:", favoriteId, "Type:", type);
 
       const response = await fetch(
-        "https://back.seunghyeon.site/pgdb/favoritelist",
+        "https://back.a.ringgo.site/pgdb/favoritelist",
         {
           method: "DELETE",
           headers: {
